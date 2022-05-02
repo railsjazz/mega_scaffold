@@ -2,7 +2,7 @@
   <h1><%= mega_scaffold.model %></h1>
 
   <dl>
-    <% mega_scaffold.fields.each do |field| %>
+    <% mega_scaffold.show.each do |field| %>
       <dt><%= field[:name] %>:</dt>
       <dd>
         <%= mega_scaffold_value @record, field %>

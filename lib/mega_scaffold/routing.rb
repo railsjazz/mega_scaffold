@@ -39,6 +39,7 @@ module MegaScaffold
               fields: self.class.fields_config,
               columns: self.class.columns_config,
               form: self.class.form_config,
+              show: self.class.show_config,
               scope: #{@scope[:as].to_s.to_json},
               collection: self.class.collection_config
             })
@@ -83,6 +84,16 @@ module MegaScaffold
           false
         end
       end
+
+      klass.singleton_class.define_method :show_config do
+        fields_config.select do |e|
+          views = Array.wrap(e[:view]).map(&:to_sym)
+          next true if views.empty?
+          next true if views.include?(:show) || views.include?(:all)
+
+          false
+        end
+      end      
 
       klass.singleton_class.define_method :collection_config do
         if collection.is_a?(Proc)
