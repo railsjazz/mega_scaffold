@@ -11,13 +11,21 @@
   </head>
 
   <body>
+    <% if notice.present? %>
+      <p style="color: green"><%= notice %></p>  
+    <% end %>
+
     <%= link_to "Home", root_path rescue nil  %>
     -
     <%= link_to "Users", users_path rescue nil %>
     -
+    <%= link_to "Photos", photos_path rescue nil %>
+    -
     <%= link_to "Accounts", accounts_path rescue nil  %>
     -
     <%= link_to "Categories (in namespace)", secret_admin_categories_path rescue nil  %>
+    -
+    <%= link_to "Companies", companies_path rescue nil  %>
     <br>
     <%= yield %>
   </body>

@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sassc"
   spec.add_development_dependency "kaminari"
   spec.add_development_dependency "faker"
+  spec.add_development_dependency "carrierwave"
 end

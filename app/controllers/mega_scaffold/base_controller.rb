@@ -19,6 +19,7 @@ module MegaScaffold
     end
 
     def new
+      @parent = parent
       @record = mega_scaffold.model.new
     end
 

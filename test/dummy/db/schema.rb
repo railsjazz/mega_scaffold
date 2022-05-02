@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_02_185843) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_02_201501) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
@@ -23,8 +23,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_02_185843) do
     t.integer "category_id"
   end
 
+  create_table "attachments", force: :cascade do |t|
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

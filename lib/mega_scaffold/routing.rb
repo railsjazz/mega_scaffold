@@ -4,6 +4,7 @@ module MegaScaffold
 
     def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil)
       model_name  = options[0].to_s.singularize # user
+      binding.pry if model_name == 'attachment'
       model       = model_name.classify.safe_constantize # User
       except      = except.map(&:to_s)
       namespaces  = @scope[:module].to_s.split("/").map{|e| e.classify}
@@ -21,7 +22,7 @@ module MegaScaffold
           helper :all
 
           def parent
-            # TODO
+            @company = Company.find(params[:company_id])
           end
 
           def collection

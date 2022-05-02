@@ -10,3 +10,6 @@
 /test/dummy/tmp/
 
 *.gem
+
+/test/dummu/pubic/uploads
+test/dummy/public/uploads/
