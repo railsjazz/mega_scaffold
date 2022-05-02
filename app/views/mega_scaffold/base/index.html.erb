@@ -1,12 +1,12 @@
-<h1><%=  @mega_scaffold[:model].to_s.pluralize %></h1>
+<h1><%= mega_scaffold.model.to_s.pluralize %></h1>
 
-<%= link_to 'NEW', [:new, @mega_scaffold[:model].to_s.downcase.to_sym] %>
+<%= link_to 'NEW', [:new, mega_scaffold.model.to_s.downcase.to_sym], class: 'button' %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <% @mega_scaffold[:index][:columns].each do |e| %>
-        <th><%= e %></th>
+      <% mega_scaffold.fields.each do |field| %>
+        <th><%= field[:name] %></th>
       <% end %>
       <th colspan="3"></th>
     </tr>
@@ -14,9 +14,9 @@
   
   <% @records.each do |record| %>
     <tr>
-      <% @mega_scaffold[:index][:columns].each do |e| %>
+      <% mega_scaffold.fields.each do |field| %>
         <td>
-          <%= record.send(e) %>
+          <%= mega_scaffold_value record, field %>
         </td>
       <% end %>
       <td><%= link_to 'show', record %></td>

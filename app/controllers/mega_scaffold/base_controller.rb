@@ -1,6 +1,6 @@
 module MegaScaffold
   class BaseController < ActionController::Base
-    before_action :set_mega_scaffold_configs
+    helper_method :mega_scaffold
 
     layout 'application'
 
@@ -13,12 +13,13 @@ module MegaScaffold
     end
 
     def new
-      @record = @mega_scaffold[:model].new
+      @record = mega_scaffold.model.new
     end
 
     def create
-      @record = @mega_scaffold[:model].new(record_params)
+      @record = mega_scaffold.model.new(record_params)
       if @record.save
+        flash[:notice] = "#{mega_scaffold.model} successfully created"
         redirect_to @record
       else
         render :new
@@ -32,6 +33,7 @@ module MegaScaffold
     def update
       @record = resource
       if @record.update(record_params)
+        flash[:notice] = "#{mega_scaffold.model} successfully updated"
         redirect_to @record
       else
         render :edit
@@ -41,15 +43,20 @@ module MegaScaffold
     def destroy
       @record = resource
       @record.destroy
+      flash[:notice] = "#{mega_scaffold.model} successfully deleted"
       redirect_to action: :index
     end
 
     private
-    def set_mega_scaffold_configs
+
+    def mega_scaffold_permits
+      mega_scaffold.fields.map do |ee|
+        ee[:column].presence || ee[:name]
+      end
     end
 
     def record_params
-      params.require(@mega_scaffold[:model].to_s.downcase).permit(@mega_scaffold[:form][:fields])
+      params.require(mega_scaffold.model.to_s.downcase).permit(mega_scaffold_permits)
     end
 
   end

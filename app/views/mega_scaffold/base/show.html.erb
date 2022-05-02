@@ -1,11 +1,14 @@
-<h1><%= %></h1>
+<h1><%= mega_scaffold.model %></h1>
 
 <dl>
-  <% @mega_scaffold[:form][:fields].each do |e| %>
-    <dt><%= e %>:</dt>
-    <dd><%= @record.send(e) %></dd>
+  <% mega_scaffold.fields.each do |field| %>
+    <dt><%= field[:name] %>:</dt>
+    <dd>
+      <%= mega_scaffold_value @record, field %>
+    </dd>
   <% end %>
 </dl>
 
-<%= link_to 'Back', action: :index %>
 <%= link_to 'Edit', [:edit, @record] %>
+-
+<%= link_to 'Back', action: :index %>
