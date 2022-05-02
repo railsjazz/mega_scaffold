@@ -2,9 +2,9 @@ module MegaScaffold
   module Routing
     DEFAULT_EXCEPT_FIELDS = ["id", "created_at", "updated_at"]
 
-    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil)
+    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil, parent: nil)
       model_name  = options[0].to_s.singularize # user
-      binding.pry if model_name == 'attachment'
+     # binding.pry if model_name == 'attachment'
       model       = model_name.classify.safe_constantize # User
       except      = except.map(&:to_s)
       namespaces  = @scope[:module].to_s.split("/").map{|e| e.classify}
@@ -22,15 +22,19 @@ module MegaScaffold
           helper :all
 
           def parent
-            @company = Company.find(params[:company_id])
+            mega_scaffold.parent.call(self) if mega_scaffold.parent.is_a?(Proc)
           end
 
           def collection
-            mega_scaffold.collection
+            mega_scaffold.collection.call(self)
           end
 
           def resource
             collection.find(params[:id])
+          end
+
+          def find_parent
+            @parent = parent
           end
 
           private
@@ -42,7 +46,8 @@ module MegaScaffold
               form: self.class.form_config,
               show: self.class.show_config,
               scope: #{@scope[:as].to_s.to_json},
-              collection: self.class.collection_config
+              collection: self.class.collection_config,
+              parent: self.class.parent_config,
             })
           end
         end
@@ -98,11 +103,15 @@ module MegaScaffold
 
       klass.singleton_class.define_method :collection_config do
         if collection.is_a?(Proc)
-          collection.call
+          collection
         else
-          model.all
+          -> (controller) { model.all }
         end
       end
+
+      klass.singleton_class.define_method :parent_config do
+        parent
+      end      
 
       resources *options
 

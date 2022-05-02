@@ -2,7 +2,11 @@
   <div class="mega_scaffold_container_header">
     <h1><%= mega_scaffold.model.to_s.pluralize %></h1>
     <div class="mega_scaffold_container_header_actions">
-      <%= link_to 'NEW', { action: :new }, { class: 'button btn btn-primary' } %>
+      <%= link_to 'New', { action: :new }, { class: 'button btn btn-primary' } %>
+      <% if @parent %>
+        &mdash;
+        <%= link_to 'Back', mega_scaffold_parent_url %>
+      <% end %>
     </div>
   </div>
 

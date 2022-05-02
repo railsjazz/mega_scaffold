@@ -11,5 +11,13 @@ module MegaScaffold
       end
     end
 
+    def mega_scaffold_parent_url
+      [mega_scaffold.scope&.to_sym, @parent].reject(&:blank?)
+    end
+
+    def mega_scaffold_form_url(record)
+      [mega_scaffold.scope&.to_sym, @parent, record].reject(&:blank?)
+    end
+
   end
 end

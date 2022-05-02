@@ -1,8 +1,12 @@
 module MegaScaffold
   class BaseController < ActionController::Base
-    helper_method :mega_scaffold
+    include Helpers
+
+    before_action :find_parent
 
     layout 'application'
+
+    helper_method :mega_scaffold
 
     def index
       @records = if defined?(Kaminari)
@@ -19,15 +23,14 @@ module MegaScaffold
     end
 
     def new
-      @parent = parent
-      @record = mega_scaffold.model.new
+      @record = collection.new
     end
 
     def create
-      @record = mega_scaffold.model.new(record_params)
+      @record = collection.build(record_params)
       if @record.save
         flash[:notice] = "#{mega_scaffold.model} successfully created"
-        redirect_to [mega_scaffold.scope&.to_sym, @record].reject(&:blank?)
+        redirect_to mega_scaffold_form_url(@record)
       else
         render :new
       end
@@ -41,7 +44,7 @@ module MegaScaffold
       @record = resource
       if @record.update(record_params)
         flash[:notice] = "#{mega_scaffold.model} successfully updated"
-        redirect_to [mega_scaffold.scope&.to_sym, @record].reject(&:blank?)
+        redirect_to mega_scaffold_form_url(@record)
       else
         render :edit
       end
@@ -59,7 +62,6 @@ module MegaScaffold
     def mega_scaffold_permits
       mega_scaffold.fields.map do |ee|
         next if ee[:type] == :virtual
-
         ee[:column].presence || ee[:name]
       end.compact
     end

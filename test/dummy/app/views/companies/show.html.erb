@@ -2,8 +2,15 @@
 
 <div>
   <%= link_to "Edit this company", edit_company_path(@company) %> |
-  <%= link_to "Attachments", company_attachments_path(@company) %> |
+  <%= link_to "Manage Attachments", company_attachments_path(@company) %> |
   <%= link_to "Back to companies", companies_path %>
+
+  <br>
+
+  Attachments:  <%= @company.attachments.count %>
+
+  <br>
+  <br>
 
   <%= button_to "Destroy this company", @company, method: :delete %>
 </div>
