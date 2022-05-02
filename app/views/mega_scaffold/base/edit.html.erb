@@ -1,0 +1,14 @@
+<h1>Edit</h1>
+
+<%= simple_form_for @record do |f| %>
+
+  <% @mega_scaffold[:form][:fields].each do |e| %>
+
+    <%= f.input e %>
+
+  <% end %>
+
+  <%= f.submit %>
+  <%= link_to 'Back', action: :index %>
+
+<% end %>
