@@ -1,14 +1,16 @@
-<h1><%= mega_scaffold.model %></h1>
+<div class="mega_scaffold_container">
+  <h1><%= mega_scaffold.model %></h1>
 
-<dl>
-  <% mega_scaffold.fields.each do |field| %>
-    <dt><%= field[:name] %>:</dt>
-    <dd>
-      <%= mega_scaffold_value @record, field %>
-    </dd>
-  <% end %>
-</dl>
+  <dl>
+    <% mega_scaffold.fields.each do |field| %>
+      <dt><%= field[:name] %>:</dt>
+      <dd>
+        <%= mega_scaffold_value @record, field %>
+      </dd>
+    <% end %>
+  </dl>
 
-<%= link_to 'Edit', [:edit, @record] %>
--
-<%= link_to 'Back', action: :index %>
+  <%= link_to 'Edit', { action: :edit, @record.class.primary_key => @record }, { class: 'button' } %>
+  -
+  <%= link_to 'Back', { action: :index }, { class: 'button' } %>
+</div>

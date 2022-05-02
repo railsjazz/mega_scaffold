@@ -3,11 +3,7 @@ module MegaScaffold
 
     def mega_scaffold_value(record, field)
       if field[:value].present?
-        if field[:type] == :virtual
-          field[:value].call record
-        else
-          field[:value].call record.send(field[:name])
-        end
+        field[:value].call record
       else
         record.send(field[:name])
       end

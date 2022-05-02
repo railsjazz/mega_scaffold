@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "sprockets-rails"
   spec.add_development_dependency "country_select"
+  spec.add_development_dependency "sassc"
 end

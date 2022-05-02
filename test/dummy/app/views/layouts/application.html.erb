@@ -11,11 +11,13 @@
   </head>
 
   <body>
-    <%= link_to "Home", root_path %>
+    <%= link_to "Home", root_path rescue nil  %>
     -
-    <%= link_to "Users", users_path %>
+    <%= link_to "Users", users_path rescue nil %>
     -
-    <%= link_to "Accounts", accounts_path %>
+    <%= link_to "Accounts", accounts_path rescue nil  %>
+    -
+    <%= link_to "Categories (in namespace)", secret_admin_categories_path rescue nil  %>
     <br>
     <%= yield %>
   </body>

@@ -1,6 +1,8 @@
 class Account < ApplicationRecord
   belongs_to :owner, class_name: "User"
 
+  scope :by_name, -> { order(name: :asc) }
+
   validates :name, presence: true
   validate :name_is_not_include_5
 

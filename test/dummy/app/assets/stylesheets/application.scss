@@ -1,0 +1,31 @@
+/* Application styles */
+
+body {
+  padding: 50px;
+  padding-top: 20px;
+}
+
+.mega_scaffold_container {
+  padding-top: 20px;
+
+  .mega_scaffold_container_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  abbr {
+    color: red;
+    text-decoration: none;
+  }
+
+  label {
+    margin-top: 10px;
+    display: block;
+  }
+
+  table {
+    width: 100%;
+  }
+
+}

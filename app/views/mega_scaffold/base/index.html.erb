@@ -1,27 +1,32 @@
-<h1><%= mega_scaffold.model.to_s.pluralize %></h1>
+<div class="mega_scaffold_container">
+  <div class="mega_scaffold_container_header">
+    <h1><%= mega_scaffold.model.to_s.pluralize %></h1>
+    <div class="mega_scaffold_container_header_actions">
+      <%= link_to 'NEW', { action: :new }, { class: 'button btn btn-primary' } %>
+    </div>
+  </div>
 
-<%= link_to 'NEW', [:new, mega_scaffold.model.to_s.downcase.to_sym], class: 'button' %>
-
-<table class="table">
-  <thead>
-    <tr>
-      <% mega_scaffold.fields.each do |field| %>
-        <th><%= field[:name] %></th>
-      <% end %>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  
-  <% @records.each do |record| %>
-    <tr>
-      <% mega_scaffold.fields.each do |field| %>
-        <td>
-          <%= mega_scaffold_value record, field %>
-        </td>
-      <% end %>
-      <td><%= link_to 'show', record %></td>
-      <td><%= link_to 'edit', [:edit, record] %></td>
-      <td><%= link_to 'delete', record, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
-    </td>
-  <% end %>
-</table>
+  <table class="table">
+    <thead>
+      <tr>
+        <% mega_scaffold.fields.each do |field| %>
+          <th><%= field[:name] %></th>
+        <% end %>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    
+    <% @records.each do |record| %>
+      <tr>
+        <% mega_scaffold.fields.each do |field| %>
+          <td>
+            <%= mega_scaffold_value record, field %>
+          </td>
+        <% end %>
+        <td><%= link_to 'show', { action: :show, record.class.primary_key => record } %></td>
+        <td><%= link_to 'edit', { action: :edit, record.class.primary_key => record } %></td>
+        <td><%= link_to 'delete', { action: :show, record.class.primary_key => record }, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
+      </td>
+    <% end %>
+  </table>
+</div>

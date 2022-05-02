@@ -1,5 +1,4 @@
-<%= simple_form_for record do |f| %>
-
+<%= simple_form_for [mega_scaffold.scope&.to_sym, record].reject(&:blank?) do |f| %>
   <% mega_scaffold.form.each do |e| %>
     <% if e[:type] == :association %>
       <%= f.association e[:name], collection: e[:collection].call %>
@@ -7,9 +6,8 @@
       <%= f.input e[:name], as: e[:type] %>
     <% end %>
   <% end %>
-
+  <br>
   <%= f.submit %>
   -
-  <%= link_to 'Back', action: :index, class: 'button' %>
-
+  <%= link_to 'Back', { action: :index }, { class: 'button' } %>
 <% end %>

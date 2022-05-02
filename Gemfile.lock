@@ -85,6 +85,7 @@ GEM
     crass (1.0.6)
     digest (3.1.0)
     erubi (1.10.0)
+    ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.10.0)
@@ -153,6 +154,8 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -187,6 +190,7 @@ DEPENDENCIES
   mega_scaffold!
   pry
   puma
+  sassc
   simple_form
   sprockets-rails
   sqlite3

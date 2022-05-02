@@ -20,7 +20,7 @@ module MegaScaffold
       @record = mega_scaffold.model.new(record_params)
       if @record.save
         flash[:notice] = "#{mega_scaffold.model} successfully created"
-        redirect_to @record
+        redirect_to [mega_scaffold.scope&.to_sym, @record].reject(&:blank?)
       else
         render :new
       end
@@ -34,7 +34,7 @@ module MegaScaffold
       @record = resource
       if @record.update(record_params)
         flash[:notice] = "#{mega_scaffold.model} successfully updated"
-        redirect_to @record
+        redirect_to [mega_scaffold.scope&.to_sym, @record].reject(&:blank?)
       else
         render :edit
       end

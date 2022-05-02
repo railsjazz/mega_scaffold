@@ -2,32 +2,30 @@ module MegaScaffold
   module Routing
     DEFAULT_EXCEPT_FIELDS = ["id", "created_at", "updated_at"]
 
-    def prepare_default_fields(model, except = [])
-      model.columns.map do |e|
-        next if except.include?(e.name.to_s)
-        {
-          name: e.name,
-          type: e.type,
-        }
-      end.compact
-    end
+    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil)
+      model_name  = options[0].to_s.singularize # user
+      model       = model_name.classify.safe_constantize # User
+      except      = except.map(&:to_s)
+      namespaces  = @scope[:module].to_s.split("/").map{|e| e.classify}
+      return unless model
 
-    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS)
-      model_name = options[0].to_s.singularize # user
-      model      = model_name.classify.constantize # User
-      except     = except.map(&:to_s)
+      fields = prepare_default_fields(model, except) if fields.blank?
 
-      fields     = prepare_default_fields(model, except) if fields.blank?
+      strs = []
+      namespaces.each_with_index do |e, index|
+        strs << "#{' ' * index}module #{index == 0 ? '::' + e : e}"
+      end
 
       code = %Q{
-        class ::#{model.to_s.pluralize}Controller < MegaScaffold::BaseController
+        class #{'::' if namespaces.empty?}#{model.to_s.pluralize}Controller < MegaScaffold::BaseController
           helper :all
 
           def parent
+            # TODO
           end
 
           def collection
-            #{model}.all
+            mega_scaffold.collection
           end
 
           def resource
@@ -41,14 +39,27 @@ module MegaScaffold
               fields: self.class.fields_config,
               columns: self.class.columns_config,
               form: self.class.form_config,
+              scope: #{@scope[:as].to_s.to_json},
+              collection: self.class.collection_config
             })
           end
         end
-
-        ::#{model.to_s.pluralize}Controller
       }
-      klass = eval(code)
+
+      strs << code
+      namespaces.each_with_index do |e, index|
+        strs << "#{' ' * (namespaces.size - index - 1)}end"
+      end
+
+      strs << %Q{
+        #{namespaces.any? ? namespaces.join("::") + "::" : '::'}#{model.to_s.pluralize}Controller
+      }
+
+      code = strs.join("\n")
+
       #puts code
+
+      klass = eval(code)
 
       klass.singleton_class.define_method :fields_config do
         fields
@@ -73,12 +84,31 @@ module MegaScaffold
         end
       end
 
-      #puts klass.form_config
-
-     # binding.pry
+      klass.singleton_class.define_method :collection_config do
+        if collection.is_a?(Proc)
+          collection.call
+        else
+          model.all
+        end
+      end
 
       resources *options
+
+    rescue ActiveRecord::StatementInvalid => ex
+      puts ex.message
     end
+
+    private
+
+    def prepare_default_fields(model, except = [])
+      model.columns.map do |e|
+        next if except.include?(e.name.to_s)
+        {
+          name: e.name,
+          type: e.type,
+        }
+      end.compact
+    end    
 
   end
 end
