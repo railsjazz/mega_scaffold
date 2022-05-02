@@ -85,6 +85,8 @@ GEM
     crass (1.0.6)
     digest (3.1.0)
     erubi (1.10.0)
+    faker (2.20.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -92,6 +94,18 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.16.0)
       simple_po_parser (~> 1.1)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -187,6 +201,8 @@ PLATFORMS
 
 DEPENDENCIES
   country_select
+  faker
+  kaminari
   mega_scaffold!
   pry
   puma

@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sprockets-rails"
   spec.add_development_dependency "country_select"
   spec.add_development_dependency "sassc"
+  spec.add_development_dependency "kaminari"
+  spec.add_development_dependency "faker"
 end

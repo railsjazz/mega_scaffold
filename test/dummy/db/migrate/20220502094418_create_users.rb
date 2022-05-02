@@ -12,11 +12,11 @@ class CreateUsers < ActiveRecord::Migration[7.0]
 
     100.times do
       User.create(
-        name: "User #{rand(1000)}",
+        name: Faker::Name.name,
         age: rand(100),
         dob: rand(10000).days.ago,
-        about: "Some content goes here",
-        country: ["Ukraine", "Poland", "Germany"].sample
+        about: Faker::Lorem.paragraph,
+        country: Faker::Address.country
       )
     end
   end

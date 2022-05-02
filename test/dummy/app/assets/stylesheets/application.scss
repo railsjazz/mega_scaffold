@@ -24,8 +24,26 @@ body {
     display: block;
   }
 
+  .check_boxes {
+    label {
+      display: inline;
+    }
+
+    label.collection_check_boxes {
+      padding-left: 5px;
+    }
+
+    .checkbox {
+      margin-left: 10px;
+    }
+  }
+
   table {
     width: 100%;
+  }
+
+  .pagination > * {
+    margin-right: 10px;
   }
 
 }

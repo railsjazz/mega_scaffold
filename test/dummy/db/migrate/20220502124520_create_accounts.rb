@@ -9,7 +9,7 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
 
     100.times do
       Account.create(
-        name: "Account #{rand(1000)}",
+        name: Faker::Company.name,
         owner: User.all.sample
       )
     end

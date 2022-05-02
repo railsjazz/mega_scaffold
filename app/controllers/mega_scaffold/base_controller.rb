@@ -5,7 +5,13 @@ module MegaScaffold
     layout 'application'
 
     def index
-      @records = collection
+      @records = if defined?(Kaminari)
+        collection.page(params[:page])
+      elsif defined?(WillPaginate)
+        collection.paginate(params[:page])
+      else
+        collection
+      end
     end
 
     def show
@@ -51,8 +57,10 @@ module MegaScaffold
 
     def mega_scaffold_permits
       mega_scaffold.fields.map do |ee|
+        next if ee[:type] == :virtual
+
         ee[:column].presence || ee[:name]
-      end
+      end.compact
     end
 
     def record_params

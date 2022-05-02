@@ -15,18 +15,35 @@
         <th colspan="3"></th>
       </tr>
     </thead>
-    
-    <% @records.each do |record| %>
-      <tr>
-        <% mega_scaffold.fields.each do |field| %>
-          <td>
-            <%= mega_scaffold_value record, field %>
-          </td>
+
+    <tbody>
+      <% if @records.present? %>
+        <% @records.each do |record| %>
+          <tr>
+            <% mega_scaffold.fields.each do |field| %>
+              <td>
+                <%= mega_scaffold_value record, field, :index %>
+              </td>
+            <% end %>
+            <td><%= link_to 'show', { action: :show, record.class.primary_key => record } %></td>
+            <td><%= link_to 'edit', { action: :edit, record.class.primary_key => record } %></td>
+            <td><%= link_to 'delete', { action: :show, record.class.primary_key => record }, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
+          </tr>
         <% end %>
-        <td><%= link_to 'show', { action: :show, record.class.primary_key => record } %></td>
-        <td><%= link_to 'edit', { action: :edit, record.class.primary_key => record } %></td>
-        <td><%= link_to 'delete', { action: :show, record.class.primary_key => record }, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
-      </td>
-    <% end %>
+      <% else %>
+        <tr>
+          <td colspan="<%= mega_scaffold.fields.size + 1 %>">
+            No Records.
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
   </table>
+
+  <% if respond_to?(:paginate) %>
+    <%= paginate @records %>
+  <% elsif respond_to?(:will_paginate) %>
+    <%= will_paginate @records %>
+  <% end %>
 </div>
