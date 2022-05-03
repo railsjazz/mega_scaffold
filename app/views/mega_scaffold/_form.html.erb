@@ -11,10 +11,12 @@
   <% end %>
 
   <% mega_scaffold.form.each do |e| %>
+    <% logger.info " ----> raw: #{e}"%>
+
     <% type = e[:type].presence || :text_field %>
     <% field = e[:column].presence || e[:name] %>
     <% field = field.is_a?(Hash) ? field[:name] : field %>
-    <% options = type == :text_area ? { rows: 4, cols: 60 } : e.dig(:column, :options).presence || {} %>
+    <% options = type == :text_area ? { rows: 4, cols: 60 } : e.dig(:column, :options).presence || {} rescue {} %>
 
     <% logger.info "  ----> field: #{field}, type: #{type}, options: #{options}" %>
 

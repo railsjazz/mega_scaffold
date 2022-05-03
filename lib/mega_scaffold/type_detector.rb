@@ -18,6 +18,8 @@ module MegaScaffold
           :password_field
         when /phone/
           :phone_field
+        when /email/
+          :email_field
         when /color/
           :color_field
         when /url/

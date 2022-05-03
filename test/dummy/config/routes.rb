@@ -28,8 +28,8 @@ Rails.application.routes.draw do
 
   mega_scaffold :photos,
     fields: [
-      { name: :user, column: :user_id, view: :all, type: :association, collection: -> { User.by_name }, value: -> (record, context) { record.user&.name } },
-      { name: :photo, type: :file, view: :all, value: -> (record, context) { context.image_tag record.photo.url, style: 'width: 200px' } },
+      { name: :user, column: :user_id, view: :all, type: :select, collection: -> { User.by_name.map{|e| [e.name, e.id]} }, value: -> (record, context) { record.user&.name } },
+      { name: :photo, type: :file_field, view: :all, value: -> (record, context) { context.image_tag record.photo.url, style: 'width: 200px' } },
     ]
 
   mega_scaffold :accounts, 
