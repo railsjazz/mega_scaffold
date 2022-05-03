@@ -11,7 +11,7 @@ gem "sqlite3"
 
 gem 'puma'
 gem 'pry'
-gem 'simple_form'
+#gem 'simple_form'
 gem 'sprockets-rails'
 gem 'sassc'
 gem 'kaminari'

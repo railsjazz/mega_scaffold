@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_02_201501) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_03_191207) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
@@ -36,6 +36,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_02_201501) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "colors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "colors_users", id: false, force: :cascade do |t|
+    t.integer "color_id"
+    t.integer "user_id"
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -57,6 +68,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_02_201501) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "expected_salary"
+    t.float "avg_salary"
+    t.boolean "hireable", default: false
+    t.string "phone"
+    t.string "facebook_url"
+    t.string "favorite_color"
+    t.string "secret_password"
   end
 
 end

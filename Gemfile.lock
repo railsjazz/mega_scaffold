@@ -3,7 +3,6 @@ PATH
   specs:
     mega_scaffold (0.1.0)
       rails
-      simple_form
 
 GEM
   remote: https://rubygems.org/
@@ -206,9 +205,6 @@ GEM
       ffi (~> 1.12)
     sassc (2.4.0)
       ffi (~> 1.9)
-    simple_form (5.1.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     simple_po_parser (1.1.6)
     simplecov (0.21.2)
       docile (~> 1.1)
@@ -252,7 +248,6 @@ DEPENDENCIES
   puma
   rspec-rails
   sassc
-  simple_form
   simplecov
   sprockets-rails
   sqlite3

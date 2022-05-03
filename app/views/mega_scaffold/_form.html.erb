@@ -1,13 +1,63 @@
-<%= simple_form_for mega_scaffold_form_url(record) do |f| %>
-  <% mega_scaffold.form.each do |e| %>
-    <% if e[:type] == :association %>
-      <%= f.association e[:name], collection: e[:collection].call, as: e[:as] %>
-    <% else %>
-      <%= f.input e[:name], as: e[:type] %>
-    <% end %>
+<%= form_for mega_scaffold_form_url(record) do |f| %>
+  <% if record.errors.any? %>
+    <div class="mega_scaffold_errors">
+      <h4><%= pluralize(record.errors.count, "error") %> prohibited this record from being saved:</h4>
+      <ul>
+        <% record.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
+
+  <% mega_scaffold.form.each do |e| %>
+    <% type = e[:type].presence || :text_field %>
+    <% field = e[:column].presence || e[:name] %>
+    <% field = field.is_a?(Hash) ? field[:name] : field %>
+    <% options = type == :text_area ? { rows: 4, cols: 60 } : e.dig(:column, :options).presence || {} %>
+
+    <% logger.info "  ----> field: #{field}, type: #{type}, options: #{options}" %>
+
+    <h3><%#= type %></h3>
+
+    <div class="mega_scaffold_field">
+      <% if type == :collection_check_boxes %>
+        <label><%= e[:name] %></label>
+        <div class="mega_scaffold_field_multiple">
+          <%= f.collection_check_boxes field, e[:collection].call, *e[:column][:options] %>
+        </div>
+ 
+      <% elsif type == :select %>
+        <label>
+          <%= e[:name] %>
+          <div>
+            <%= f.select field, e[:collection].call, options %>
+          </div>
+        </label>
+
+      <% elsif type == :check_box %>
+        <label>
+          <%= f.check_box field, options %>
+          <%= e[:name] %>
+        </label>
+
+
+      <% else %>
+        <label>
+          <%= e[:name] %>
+          <div>
+            <%= f.send type, field, options %>
+          </div>
+        </label>
+      <% end %>
+    </div>
+
+  <% end %>
+
   <br>
+  <br>
+
   <%= f.submit %>
   &mdash;
-  <%= link_to 'Back', { action: :index }, { class: 'button' } %>
+  <%= link_to 'Back', { action: :index } %>
 <% end %>

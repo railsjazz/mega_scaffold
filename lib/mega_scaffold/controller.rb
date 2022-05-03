@@ -67,11 +67,21 @@ module MegaScaffold
     def mega_scaffold_permits
       mega_scaffold.fields.map do |ee|
         next if ee[:type] == :virtual
-        ee[:column].presence || ee[:name]
+        result = ee[:column].presence || ee[:name]
+        if result.is_a?(Hash)
+          if result[:permit]
+            { result[:name] => result[:permit] }
+          else
+            result[:name]
+          end
+        else
+          result
+        end
       end.compact
     end
 
     def record_params
+      logger.debug "  ----> permit: #{mega_scaffold_permits}"
       params.require(mega_scaffold.model.to_s.downcase).permit(mega_scaffold_permits)
     end
 

@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails"
-  spec.add_dependency "simple_form"
+#  spec.add_dependency "simple_form"
   spec.add_development_dependency "puma"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "sprockets-rails"

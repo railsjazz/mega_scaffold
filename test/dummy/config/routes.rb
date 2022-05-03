@@ -23,9 +23,10 @@ Rails.application.routes.draw do
 
   mega_scaffold :users,
     collection: -> (controller) { User.ordered },
-    concerns: [Protected]
+    concerns: [Protected],
+    only: [:id, :name, :age, :dob, :country, :created_at, :phone]
 
-  mega_scaffold :photos, 
+  mega_scaffold :photos,
     fields: [
       { name: :user, column: :user_id, view: :all, type: :association, collection: -> { User.by_name }, value: -> (record, context) { record.user&.name } },
       { name: :photo, type: :file, view: :all, value: -> (record, context) { context.image_tag record.photo.url, style: 'width: 200px' } },
@@ -35,10 +36,34 @@ Rails.application.routes.draw do
     collection: -> (controller) { controller.admin? ? Account.all : current_user.accounts },
     fields: [
       { name: :id, view: [:index, :show] },
-      { name: :name, type: :string, view: :all },
-      { name: :categories, column: { category_ids: [] }, type: :association, as: :check_boxes, view: :form, collection: -> { Category.by_name }, value: { index: -> (record, context) { record.categories.count }, show: -> (record, context) { record.categories.pluck(:name).join(", ") } } },
+      { name: :name, type: :text_field, view: :all },
+      { 
+        name: :categories,
+        column: {
+          name: :category_ids,
+          permit: [],
+          options: [:id, :name]
+        },
+        type: :collection_check_boxes,
+        view: :form,
+        collection: -> { Category.by_name },
+        value: {
+          index: -> (record, context) { record.categories.count },
+          show: -> (record, context) { record.categories.pluck(:name).join(", ") }
+        }
+      },
       { name: 'VIRTUAL ATTR', type: :virtual, view: :index, value: -> (record, context) { context.link_to record.name.to_s.upcase, record } },
-      { name: :owner, column: :owner_id, view: :all, type: :association, collection: -> { User.by_name }, value: -> (record, context) { record.owner&.name } },
+      {
+        name: :owner,
+        column: {
+          name: :owner_id,
+          options: {include_blank: true}
+        },
+        view: :all,
+        type: :select,
+        collection: -> { User.by_name.map{|e| [e.name, e.id]} },
+        value: -> (record, context) { record.owner&.name }
+      },
       { name: :created_at, view: [:index, :show], value: -> (record, context) { I18n.l(record.created_at, format: :long) } },
     ]
 
