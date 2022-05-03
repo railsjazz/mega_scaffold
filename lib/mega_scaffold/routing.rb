@@ -2,119 +2,33 @@ module MegaScaffold
   module Routing
     DEFAULT_EXCEPT_FIELDS = ["id", "created_at", "updated_at"]
 
-    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil, parent: nil)
+    def mega_scaffold(*options, fields: nil, except: DEFAULT_EXCEPT_FIELDS, collection: nil, parent: nil, concerns: nil)
       model_name  = options[0].to_s.singularize # user
-     # binding.pry if model_name == 'attachment'
       model       = model_name.classify.safe_constantize # User
       except      = except.map(&:to_s)
-      namespaces  = @scope[:module].to_s.split("/").map{|e| e.classify}
+      concerns    = Array.wrap(concerns)
       return unless model
 
       fields = prepare_default_fields(model, except) if fields.blank?
 
-      strs = []
-      namespaces.each_with_index do |e, index|
-        strs << "#{' ' * index}module #{index == 0 ? '::' + e : e}"
-      end
+      generator = MegaScaffold::CodeGenerator.new({
+        namespaces: @scope[:module].to_s.split("/").map{|e| e.classify},
+        concerns: concerns,
+        model: model,
+        scope: @scope
+      })
 
-      code = %Q{
-        class #{'::' if namespaces.empty?}#{model.to_s.pluralize}Controller < MegaScaffold::BaseController
-          helper :all
-
-          def parent
-            mega_scaffold.parent.call(self) if mega_scaffold.parent.is_a?(Proc)
-          end
-
-          def collection
-            mega_scaffold.collection.call(self)
-          end
-
-          def resource
-            collection.find(params[:id])
-          end
-
-          def find_parent
-            @parent = parent
-          end
-
-          private
-          def mega_scaffold
-            @mega_scaffold ||= OpenStruct.new({
-              model: #{model},
-              fields: self.class.fields_config,
-              columns: self.class.columns_config,
-              form: self.class.form_config,
-              show: self.class.show_config,
-              scope: #{@scope[:as].to_s.to_json},
-              collection: self.class.collection_config,
-              parent: self.class.parent_config,
-            })
-          end
-        end
-      }
-
-      strs << code
-      namespaces.each_with_index do |e, index|
-        strs << "#{' ' * (namespaces.size - index - 1)}end"
-      end
-
-      strs << %Q{
-        #{namespaces.any? ? namespaces.join("::") + "::" : '::'}#{model.to_s.pluralize}Controller
-      }
-
-      code = strs.join("\n")
-
-      #puts code
-
+      code = generator.generate
       klass = eval(code)
 
-      klass.singleton_class.define_method :fields_config do
-        fields
-      end
-
-      klass.singleton_class.define_method :columns_config do
-        fields_config.select do |e|
-          views = Array.wrap(e[:view]).map(&:to_sym)
-          next true if views.empty?
-          next true if views.include?(:index) || views.include?(:all)
-
-          false
-        end
-      end
-
-      klass.singleton_class.define_method :form_config do
-        fields_config.select do |e|
-          views = Array.wrap(e[:view]).map(&:to_sym)
-          next true if views.empty?
-          next true if views.include?(:form) || views.include?(:all)
-          false
-        end
-      end
-
-      klass.singleton_class.define_method :show_config do
-        fields_config.select do |e|
-          views = Array.wrap(e[:view]).map(&:to_sym)
-          next true if views.empty?
-          next true if views.include?(:show) || views.include?(:all)
-
-          false
-        end
-      end      
-
-      klass.singleton_class.define_method :collection_config do
-        if collection.is_a?(Proc)
-          collection
-        else
-          -> (controller) { model.all }
-        end
-      end
-
-      klass.singleton_class.define_method :parent_config do
-        parent
-      end      
+      MegaScaffold::KlassDecorator.new(klass, {
+        fields: fields,
+        collection: collection,
+        parent: parent,
+        model: model
+      }).decorate
 
       resources *options
-
     rescue ActiveRecord::StatementInvalid => ex
       puts ex.message
     end

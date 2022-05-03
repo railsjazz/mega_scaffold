@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     end
   end
 
-  mega_scaffold :users, collection: -> (controller) { User.ordered }
+  mega_scaffold :users,
+    collection: -> (controller) { User.ordered },
+    concerns: [Protected]
 
   mega_scaffold :photos, 
     fields: [
@@ -30,7 +32,7 @@ Rails.application.routes.draw do
     ]
 
   mega_scaffold :accounts, 
-    collection: -> (controller) { Account.by_name },
+    collection: -> (controller) { controller.admin? ? Account.all : current_user.accounts },
     fields: [
       { name: :id, view: [:index, :show] },
       { name: :name, type: :string, view: :all },

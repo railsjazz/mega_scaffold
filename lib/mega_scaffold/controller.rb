@@ -1,12 +1,13 @@
 module MegaScaffold
-  class BaseController < ActionController::Base
-    include Helpers
-
-    before_action :find_parent
-
-    layout 'application'
-
-    helper_method :mega_scaffold
+  module Controller
+    extend ActiveSupport::Concern
+ 
+    included do
+      prepend_view_path("#{MegaScaffold::Engine.root}/app/views")
+      before_action :find_parent
+      layout 'application'
+      helper_method :mega_scaffold
+    end
 
     def index
       @records = if defined?(Kaminari)
@@ -16,14 +17,17 @@ module MegaScaffold
       else
         collection
       end
+      render template: 'mega_scaffold/index'
     end
 
     def show
       @record = resource
+      render template: 'mega_scaffold/show'
     end
 
     def new
       @record = collection.new
+      render template: 'mega_scaffold/new'
     end
 
     def create
@@ -32,12 +36,13 @@ module MegaScaffold
         flash[:notice] = "#{mega_scaffold.model} successfully created"
         redirect_to mega_scaffold_form_url(@record)
       else
-        render :new
+        render template: 'mega_scaffold/new'
       end
     end
 
     def edit
       @record = resource
+      render template: 'mega_scaffold/edit'
     end
 
     def update
@@ -46,7 +51,7 @@ module MegaScaffold
         flash[:notice] = "#{mega_scaffold.model} successfully updated"
         redirect_to mega_scaffold_form_url(@record)
       else
-        render :edit
+        render template: 'mega_scaffold/edit'
       end
     end    
 

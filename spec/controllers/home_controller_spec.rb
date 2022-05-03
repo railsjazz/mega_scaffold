@@ -11,10 +11,6 @@ describe "Pages", type: :request do
   it "works" do
     [
       '/',
-      '/users',
-      '/users/new',
-      "/users/#{@user.id}",
-      "/users/#{@user.id}/edit",
       "/companies/#{@company.id}",
       "/companies/#{@company.id}/edit",
       "/companies/#{@company.id}/attachments",
@@ -30,6 +26,19 @@ describe "Pages", type: :request do
       '/photos', 
     ].each do |url|
       get url
+      expect(response).to be_successful
+    end
+  end
+
+
+  it 'with protection' do
+    [
+      '/users',
+      '/users/new',
+      "/users/#{@user.id}",
+      "/users/#{@user.id}/edit",
+    ].each do |url|
+      get url, headers: { HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Basic.encode_credentials('user', 'secret') }
       expect(response).to be_successful
     end
   end

@@ -2,11 +2,16 @@
 
 <div id="companies">
   <% @companies.each do |company| %>
-    <%= render company %>
-    <p>
-      <%= link_to "Show this company", company %>
-    </p>
+    <div style="border: 1px solid #999; padding: 10px">
+      <%= render company %>
+      <p>
+        <%= link_to "Show", company %>
+        |
+        <%= link_to "Attachments", [company, :attachments] %>
+      </p>
+    </div>
   <% end %>
 </div>
 
+<br>
 <%= link_to "New company", new_company_path %>
