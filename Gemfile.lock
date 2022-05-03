@@ -93,7 +93,9 @@ GEM
       countries (~> 5.0)
       sort_alphabetical (~> 1.1)
     crass (1.0.6)
+    diff-lcs (1.5.0)
     digest (3.1.0)
+    docile (1.4.0)
     erubi (1.10.0)
     faker (2.20.0)
       i18n (>= 1.8.11, < 2)
@@ -183,6 +185,23 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    rspec-core (3.11.0)
+      rspec-support (~> 3.11.0)
+    rspec-expectations (3.11.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-mocks (3.11.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-rails (5.1.1)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.11.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     sassc (2.4.0)
@@ -191,6 +210,12 @@ GEM
       actionpack (>= 5.2)
       activemodel (>= 5.2)
     simple_po_parser (1.1.6)
+    simplecov (0.21.2)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sixarm_ruby_unaccent (1.2.0)
     sort_alphabetical (1.1.0)
       unicode_utils (>= 1.2.2)
@@ -225,8 +250,10 @@ DEPENDENCIES
   mega_scaffold!
   pry
   puma
+  rspec-rails
   sassc
   simple_form
+  simplecov
   sprockets-rails
   sqlite3
 
