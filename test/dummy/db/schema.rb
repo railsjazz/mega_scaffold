@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_03_191207) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_04_073418) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "account_type"
+    t.integer "priority"
   end
 
   create_table "accounts_categories", id: false, force: :cascade do |t|
@@ -53,6 +55,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_03_191207) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "company_users", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "photos", force: :cascade do |t|
     t.integer "user_id"
     t.string "photo"
@@ -75,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_03_191207) do
     t.string "facebook_url"
     t.string "favorite_color"
     t.string "secret_password"
+    t.string "role"
   end
 
 end

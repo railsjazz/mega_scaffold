@@ -16,37 +16,42 @@
     <% type = e[:type].presence || :text_field %>
     <% field = e[:column].presence || e[:name] %>
     <% field = field.is_a?(Hash) ? field[:name] : field %>
-    <% options = type == :text_area ? { rows: 4, cols: 60 } : e.dig(:column, :options).presence || {} rescue {} %>
+    <% label = e[:label].presence || e[:name] %>
+    <% options = e[:options].presence || {} rescue {} %>
+
+    <%# default %>
+    <% options.merge!({ rows: 4, cols: 60 }) if type == :text_area %>
 
     <% logger.info "  ----> field: #{field}, type: #{type}, options: #{options}" %>
 
     <h3><%#= type %></h3>
 
     <div class="mega_scaffold_field">
-      <% if type == :collection_check_boxes %>
-        <label><%= e[:name] %></label>
+      <% if type.to_s =~ /collection/ %>
+        <label><%= label %></label>
         <div class="mega_scaffold_field_multiple">
-          <%= f.collection_check_boxes field, e[:collection].call, *e[:column][:options] %>
+          <%= f.send type, field, e[:collection].call, *options %>
         </div>
  
       <% elsif type == :select %>
         <label>
-          <%= e[:name] %>
+          <%= label %>
           <div>
             <%= f.select field, e[:collection].call, options %>
           </div>
         </label>
+        
 
       <% elsif type == :check_box %>
         <label>
           <%= f.check_box field, options %>
-          <%= e[:name] %>
+          <%= label %>
         </label>
 
 
       <% else %>
         <label>
-          <%= e[:name] %>
+          <%= label %>
           <div>
             <%= f.send type, field, options %>
           </div>

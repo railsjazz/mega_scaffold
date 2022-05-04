@@ -15,8 +15,8 @@
   <table class="table">
     <thead>
       <tr>
-        <% mega_scaffold.fields.each do |field| %>
-          <th><%= field[:name] %></th>
+        <% mega_scaffold.columns.each do |field| %>
+          <th><%= field[:label].presence || field[:name] %></th>
         <% end %>
         <th colspan="3"></th>
       </tr>
@@ -26,7 +26,7 @@
       <% if @records.present? %>
         <% @records.each do |record| %>
           <tr>
-            <% mega_scaffold.fields.each do |field| %>
+            <% mega_scaffold.columns.each do |field| %>
               <td>
                 <%= mega_scaffold_value record, field, :index %>
               </td>

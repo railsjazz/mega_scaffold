@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       collection: -> (controller) { controller.parent.attachments },
       fields: [
         { name: :id, view: :index },
-        { name: :file, type: :file, view: :all, value: -> (record, context) { context.link_to 'Download', record.file.url } },
+        { name: :file, type: :file_field, view: :all, value: -> (record, context) { context.link_to 'Download', record.file.url } },
         { name: :created_at, view: :index },
       ]
   end
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     namespace :admin do
       mega_scaffold :categories, fields: [
         { name: :id, view: :index },
-        { name: :name, type: :string, view: :all, value: -> (record, context) { record.name&.upcase } },
+        { name: :name, view: :all, value: -> (record, context) { record.name&.upcase } },
         { name: :accounts, view: [:index, :show], value: -> (record, context) { record.accounts.count } },
         { name: :created_at, view: [:index, :show], value: -> (record, context) { I18n.l record.created_at, format: :short } },
       ]
@@ -35,16 +35,29 @@ Rails.application.routes.draw do
   mega_scaffold :accounts, 
     collection: -> (controller) { controller.admin? ? Account.all : current_user.accounts },
     fields: [
-      { name: :id, view: [:index, :show] },
+      { name: :id, view: [:show] },
       { name: :name, type: :text_field, view: :all },
+      {
+        view: :all,
+        name: :account_type,
+        type: :collection_select,
+        collection: -> { Account::TYPES },
+        options: [:to_s, :to_s, include_blank: true]
+      },
+      {
+        view: :all,
+        name: :priority,
+        type: :range_field,
+        options: { min: 0, max: 100, step: 10 }
+      },
       { 
         name: :categories,
         column: {
           name: :category_ids,
           permit: [],
-          options: [:id, :name]
         },
         type: :collection_check_boxes,
+        options: [:id, :name],
         view: :form,
         collection: -> { Category.by_name },
         value: {
@@ -54,12 +67,10 @@ Rails.application.routes.draw do
       },
       { name: 'VIRTUAL ATTR', type: :virtual, view: :index, value: -> (record, context) { context.link_to record.name.to_s.upcase, record } },
       {
-        name: :owner,
-        column: {
-          name: :owner_id,
-          options: {include_blank: true}
-        },
+        name: :owner_id,
+        label: "Owner",
         view: :all,
+        options: {include_blank: true},
         type: :select,
         collection: -> { User.by_name.map{|e| [e.name, e.id]} },
         value: -> (record, context) { record.owner&.name }
