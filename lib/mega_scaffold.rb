@@ -10,5 +10,3 @@ require "mega_scaffold/engine"
 
 module MegaScaffold
 end
-
-ActionDispatch::Routing::Mapper.send :include, MegaScaffold::Routing

@@ -133,6 +133,8 @@ Rails.application.routes.draw do
 - integration with pundit or cancancan?
 - support for "resource" type
 - work with I18n to translate labels?
+- how to customize views
+- view customization per controller
 
 ## Contributing
 

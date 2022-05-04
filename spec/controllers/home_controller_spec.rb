@@ -43,4 +43,30 @@ describe "Pages", type: :request do
     end
   end
 
+  it 'creates records' do
+    post '/accounts', params: { account: { name: 'ABC123', owner_id: @user.id } }
+    expect(response).to be_redirect
+    expect(Account.find_by(name: 'ABC123')).to be
+
+    post '/accounts', params: { account: { name: '' } }
+    expect(response.status).to eq(422)
+  end
+
+  it 'updates records' do
+    expect(@account.name).to eq("soft")
+    patch "/accounts/#{@account.id}", params: { account: { name: 'ABC123', owner_id: @user.id } }
+    expect(response).to be_redirect
+    @account.reload
+    expect(@account.name).to eq("ABC123")
+
+    patch "/accounts/#{@account.id}", params: { account: { name: '' } }
+    expect(response.status).to eq(422)
+  end
+
+  it 'deleted the record' do
+    delete "/accounts/#{@account.id}"
+    expect(response).to be_redirect
+    expect(Account.find_by(id: @account.id)).to be_nil
+  end
+
 end

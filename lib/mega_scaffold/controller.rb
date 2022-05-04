@@ -34,9 +34,9 @@ module MegaScaffold
       @record = collection.build(record_params)
       if @record.save
         flash[:notice] = "#{mega_scaffold.model} successfully created"
-        redirect_to mega_scaffold_form_url(@record)
+        redirect_to url_for({ action: :show, mega_scaffold.pk => @record.send(mega_scaffold.pk) })
       else
-        render template: 'mega_scaffold/new'
+        render template: 'mega_scaffold/new', status: :unprocessable_entity
       end
     end
 
@@ -49,9 +49,9 @@ module MegaScaffold
       @record = resource
       if @record.update(record_params)
         flash[:notice] = "#{mega_scaffold.model} successfully updated"
-        redirect_to mega_scaffold_form_url(@record)
+        redirect_to url_for({ action: :show, mega_scaffold.pk => @record.send(mega_scaffold.pk) })
       else
-        render template: 'mega_scaffold/edit'
+        render template: 'mega_scaffold/edit', status: :unprocessable_entity
       end
     end    
 

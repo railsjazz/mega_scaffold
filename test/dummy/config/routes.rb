@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     fields: [
       { name: :id, view: [:show] },
       { name: :name, type: :text_field, view: :all, value: -> (record, view) { view.link_to record.name.to_s.upcase, record } },
+      { name: :email, type: :email_field, view: :all, value: -> (record, view) { view.mail_to record.email } },
       {
         view: :all,
         name: :account_type,
