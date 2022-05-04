@@ -40,12 +40,12 @@ module MegaScaffold
           private
           def mega_scaffold
             @mega_scaffold ||= OpenStruct.new({
+              scope: #{options[:scope][:as].to_s.to_json},
               model: #{options[:model]},
               fields: self.class.fields_config,
               columns: self.class.columns_config,
               form: self.class.form_config,
               show: self.class.show_config,
-              scope: #{options[:scope][:as].to_s.to_json},
               collection: self.class.collection_config,
               parent: self.class.parent_config,
             })

@@ -5,7 +5,7 @@
 
   <dl>
     <% mega_scaffold.show.each do |field| %>
-      <dt><%= field[:label].presence || field[:name] %>:</dt>
+      <dt><%= mega_scaffold_field_name field %>:</dt>
       <dd>
         <%= mega_scaffold_value @record, field %>
       </dd>

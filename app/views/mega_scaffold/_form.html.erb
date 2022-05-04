@@ -11,18 +11,18 @@
   <% end %>
 
   <% mega_scaffold.form.each do |e| %>
-    <% logger.info " ----> raw: #{e}"%>
+    <% logger.info "  --[RAW]--> #{e}"%>
 
     <% type = e[:type].presence || :text_field %>
     <% field = e[:column].presence || e[:name] %>
     <% field = field.is_a?(Hash) ? field[:name] : field %>
-    <% label = e[:label].presence || e[:name] %>
+    <% label = mega_scaffold_field_name(e) %>
     <% options = e[:options].presence || {} rescue {} %>
 
     <%# default %>
     <% options.merge!({ rows: 4, cols: 60 }) if type == :text_area %>
 
-    <% logger.info "  ----> field: #{field}, type: #{type}, options: #{options}" %>
+    <% logger.info "  --[DETAILS]--> field: #{field}, type: #{type}, options: #{options}" %>
 
     <h3><%#= type %></h3>
 
@@ -40,7 +40,7 @@
             <%= f.select field, e[:collection].call, options %>
           </div>
         </label>
-        
+
 
       <% elsif type == :check_box %>
         <label>
