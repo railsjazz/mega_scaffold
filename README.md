@@ -16,6 +16,9 @@ With additional customization options it allows you to build quickly admin panel
 If you need more customization (see `test/dummy` as an example):
 
 ```ruby
+# routes.rb
+
+Rails.application.routes.draw do
   resources :companies do
     mega_scaffold :attachments,
       parent: -> (controller) { Company.find(controller.params[:company_id]) },
@@ -95,6 +98,7 @@ If you need more customization (see `test/dummy` as an example):
       },
       { name: :created_at, view: [:index, :show], value: -> (record, _) { I18n.l(record.created_at, format: :long) } },
     ]
+ end
 ```
 
 ## TODO Ideas
