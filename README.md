@@ -1,6 +1,6 @@
 # Mega_Scaffold
 
-This is the FASTEST way how to add CRUD functionality for your models.
+This is the FASTEST way how to add CRUD functionality for your models. Literally by just adding ONE LINE of code in `routes.rb`.
 
 With additional customization options it allows you to build quickly admin panels or simple controllers to output data.
 
@@ -107,6 +107,7 @@ If you need more customization (see `test/dummy` as an example):
 - config for layout
 - export to CSV, JSON?
 - integration with pundit or cancancan?
+- support for "resource" type
 
 ## Contributing
 
