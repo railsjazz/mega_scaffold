@@ -5,7 +5,7 @@ module MegaScaffold
     included do
       prepend_view_path("#{MegaScaffold::Engine.root}/app/views")
       before_action :find_parent
-      layout 'application'
+      layout :detect_layout
       helper_method :mega_scaffold
     end
 
@@ -81,7 +81,6 @@ module MegaScaffold
     end
 
     def record_params
-      logger.debug "  ----> permit: #{mega_scaffold_permits}"
       params.require(mega_scaffold.model.to_s.downcase).permit(mega_scaffold_permits)
     end
 

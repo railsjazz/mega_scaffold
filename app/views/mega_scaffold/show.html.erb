@@ -12,7 +12,7 @@
     <% end %>
   </dl>
 
-  <%= link_to 'Edit', { action: :edit, @record.class.primary_key => @record }, { class: 'button' } %>
+  <%= link_to 'Edit', { action: :edit, mega_scaffold.pk => @record.send(mega_scaffold.pk) }, { class: 'button' } %>
   -
   <%= link_to 'Back', { action: :index }, { class: 'button' } %>
 </div>

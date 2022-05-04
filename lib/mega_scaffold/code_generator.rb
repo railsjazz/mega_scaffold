@@ -42,6 +42,7 @@ module MegaScaffold
             @mega_scaffold ||= OpenStruct.new({
               scope: #{options[:scope][:as].to_s.to_json},
               model: #{options[:model]},
+              pk: :#{options[:model].primary_key},
               fields: self.class.fields_config,
               columns: self.class.columns_config,
               form: self.class.form_config,
@@ -49,6 +50,10 @@ module MegaScaffold
               collection: self.class.collection_config,
               parent: self.class.parent_config,
             })
+          end
+
+          def detect_layout
+            "#{options[:layout].presence || 'application'}"
           end
         end
       }

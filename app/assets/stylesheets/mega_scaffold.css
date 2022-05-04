@@ -40,3 +40,7 @@
 .mega_scaffold_container .mega_scaffold_errors h4 {
   font-size: 16px;
 }
+
+.mega_scaffold_container input[type=submit] {
+  cursor: pointer;
+}

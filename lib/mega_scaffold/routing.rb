@@ -1,8 +1,17 @@
 module MegaScaffold
   module Routing
-    IGNORE_FORM_COLUMNS = [:id, :created_at, :updated_at]
 
-    def mega_scaffold(*options, fields: nil, ignore: IGNORE_FORM_COLUMNS, except: [], only: [], collection: nil, parent: nil, concerns: nil)
+    def mega_scaffold(*options,
+        fields: nil,
+        ignore: [:id, :created_at, :updated_at],
+        except: [],
+        only: [],
+        collection: nil,
+        parent: nil,
+        concerns: nil,
+        layout: "application"
+      )
+
       model_name  = options[0].to_s.singularize # user
       model       = model_name.classify.safe_constantize # User
       concerns    = Array.wrap(concerns)
@@ -13,7 +22,8 @@ module MegaScaffold
         namespaces: @scope[:module].to_s.split("/").map{|e| e.classify},
         concerns: concerns,
         model: model,
-        scope: @scope
+        scope: @scope,
+        layout: layout
       })
 
       klass = eval(generator.generate)

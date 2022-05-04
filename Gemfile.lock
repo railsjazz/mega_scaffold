@@ -147,6 +147,7 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.4-x86_64-darwin)
       racc (~> 1.4)
+    ppp-util (0.1.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -233,6 +234,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wrapped_print (0.1.0)
+      activesupport
     zeitwerk (2.5.4)
 
 PLATFORMS
@@ -244,6 +247,7 @@ DEPENDENCIES
   faker
   kaminari
   mega_scaffold!
+  ppp-util
   pry
   puma
   rspec-rails
@@ -251,6 +255,7 @@ DEPENDENCIES
   simplecov
   sprockets-rails
   sqlite3
+  wrapped_print
 
 BUNDLED WITH
    2.3.7

@@ -1,4 +1,4 @@
-<%= form_for mega_scaffold_form_url(record) do |f| %>
+<%= form_for record, url: url_for(action: record.persisted? ? :update : :create, mega_scaffold.pk => record.send(mega_scaffold.pk)) , data: { turbo: false, turbolinks: false } do |f| %>
   <% if record.errors.any? %>
     <div class="mega_scaffold_errors">
       <h4><%= pluralize(record.errors.count, "error") %> prohibited this record from being saved:</h4>
@@ -11,8 +11,6 @@
   <% end %>
 
   <% mega_scaffold.form.each do |e| %>
-    <% logger.info "  --[RAW]--> #{e}"%>
-
     <% type = e[:type].presence || :text_field %>
     <% field = e[:column].presence || e[:name] %>
     <% field = field.is_a?(Hash) ? field[:name] : field %>
@@ -21,10 +19,6 @@
 
     <%# default %>
     <% options.merge!({ rows: 4, cols: 60 }) if type == :text_area %>
-
-    <% logger.info "  --[DETAILS]--> field: #{field}, type: #{type}, options: #{options}" %>
-
-    <h3><%#= type %></h3>
 
     <div class="mega_scaffold_field">
       <% if type.to_s =~ /collection/ %>

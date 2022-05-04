@@ -4,6 +4,8 @@ This is the FASTEST way how to add CRUD functionality for your models. Literally
 
 With additional customization options it allows you to build quickly admin panels or simple controllers to output data.
 
+It works with existing models so all your validations, associations, etc will work as usual.
+
 ## Usage
 
 1) add gem to Gemfile `gem "mega_scaffold"`
@@ -13,7 +15,19 @@ With additional customization options it allows you to build quickly admin panel
 3) add `mega_scaffold :categories` (if you have `Category` model)
 
 
-If you need more customization (see `test/dummy` as an example):
+## Customization
+
+- configure layout
+- specify how to fetch records
+- specify type for input
+- configure to work with associations
+- access helpers to output value
+- hide columns
+- change labels
+- specify which fields where to show
+- provide additional options for form fields
+
+If you need examples of customization (see `test/dummy` as an example):
 
 ```ruby
 # routes.rb
@@ -48,6 +62,7 @@ Rails.application.routes.draw do
   mega_scaffold :users,
     collection: -> (_) { User.ordered },
     concerns: [Protected],
+    layout: 'admin',
     only: [:id, :name, :age, :dob, :country, :created_at, :phone]
 
   # usage with file upload and showing images in the index and show views
@@ -114,10 +129,10 @@ Rails.application.routes.draw do
 - simple search using ransack?
 - how to overide view instructions
 - check if all is ok with turbo/turbolinks
-- config for layout
 - export to CSV, JSON?
 - integration with pundit or cancancan?
 - support for "resource" type
+- work with I18n to translate labels?
 
 ## Contributing
 

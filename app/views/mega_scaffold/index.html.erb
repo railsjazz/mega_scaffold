@@ -31,9 +31,9 @@
                 <%= mega_scaffold_value record, field, :index %>
               </td>
             <% end %>
-            <td><%= link_to 'show', { action: :show, record.class.primary_key => record } %></td>
-            <td><%= link_to 'edit', { action: :edit, record.class.primary_key => record } %></td>
-            <td><%= link_to 'delete', { action: :show, record.class.primary_key => record }, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
+            <td><%= link_to 'show', { action: :show, mega_scaffold.pk => record.send(mega_scaffold.pk) } %></td>
+            <td><%= link_to 'edit', { action: :edit, mega_scaffold.pk => record.send(mega_scaffold.pk) } %></td>
+            <td><%= link_to 'delete', { action: :show, mega_scaffold.pk => record.send(mega_scaffold.pk) }, data: { method: :delete, turbo: false, turbolinks: false, confirm: "Are you sure?" } %></td>
           </tr>
         <% end %>
       <% else %>
