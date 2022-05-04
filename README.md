@@ -19,6 +19,8 @@ If you need more customization (see `test/dummy` as an example):
 # routes.rb
 
 Rails.application.routes.draw do
+
+  # could be nested in existing resources
   resources :companies do
     mega_scaffold :attachments,
       parent: -> (controller) { Company.find(controller.params[:company_id]) },
@@ -30,6 +32,7 @@ Rails.application.routes.draw do
       ]
   end
 
+  # could be added to namespaces
   namespace :secret do
     namespace :admin do
       mega_scaffold :categories, fields: [
@@ -41,11 +44,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # simple usage, you can specify concerns with "before_action" or other contoller-related logic
   mega_scaffold :users,
     collection: -> (_) { User.ordered },
     concerns: [Protected],
     only: [:id, :name, :age, :dob, :country, :created_at, :phone]
 
+  # usage with file upload and showing images in the index and show views
   mega_scaffold :photos,
     fields: [
       { name: :user, column: :user_id, view: :all, type: :select, collection: -> { User.by_name.map{|e| [e.name, e.id]} }, value: -> (record, view) { view.link_to_if record.user, record.user&.name, record.user } },
@@ -53,6 +58,7 @@ Rails.application.routes.draw do
       { name: :created_at, view: :index, value: -> (record, view) { view.l record.created_at, format: :long } },
     ]
 
+  # access to different set of records (for example admin can see all records and all other users only own) + form with associations
   mega_scaffold :accounts, 
     collection: -> (controller) { controller.admin? ? Account.all : current_user.accounts },
     fields: [
