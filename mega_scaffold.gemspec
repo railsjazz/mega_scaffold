@@ -3,8 +3,8 @@ require_relative "lib/mega_scaffold/version"
 Gem::Specification.new do |spec|
   spec.name        = "mega_scaffold"
   spec.version     = MegaScaffold::VERSION
-  spec.authors     = ["Igor Kasyanchuk"]
-  spec.email       = ["igorkasyanchuk@gmail.com"]
+  spec.authors     = ["Igor Kasyanchuk", "Liubomyr Manastyretskyi"]
+  spec.email       = ["igorkasyanchuk@gmail.com", "manastyretskyi@gmail.com"]
   spec.homepage    = "https://github.com/railsjazz/mega_scaffold"
   spec.summary     = "Fastest way to add CRUD functionality to your models."
   spec.description = "Fastest way to add CRUD functionality to your Rails models. No jQuery or other frontend dependencies."
