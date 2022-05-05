@@ -29,6 +29,11 @@ It works with existing models so all your validations, associations, etc will wo
 - specify which fields where to show
 - provide additional options for form fields
 
+How CRUD looks - simple but created in 2 minutes:
+
+![rails scaffold generator](docs/index.png)
+![rails scaffold generator](docs/edit.png)
+
 If you need examples of customization (see `test/dummy` as an example):
 
 ```ruby
