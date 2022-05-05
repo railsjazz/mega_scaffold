@@ -142,6 +142,7 @@ Rails.application.routes.draw do
 - work with I18n to translate labels?
 - how to customize views
 - view customization per controller
+- refactor how controller is generated on the fly (combine into one file)
 
 ## Contributing
 
