@@ -6,6 +6,8 @@ With additional customization options it allows you to build quickly admin panel
 
 It works with existing models so all your validations, associations, etc will work as usual.
 
+![rails scaffold generator](docs/mega_scaffold.png)
+
 ## Usage
 
 1) add gem to Gemfile `gem "mega_scaffold"`
