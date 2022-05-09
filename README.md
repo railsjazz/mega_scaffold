@@ -1,5 +1,7 @@
 # mega_scaffold
 
+[![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
+
 This is the FASTEST way how to add CRUD functionality for your models. Literally by just adding ONE LINE of code in `routes.rb`.
 
 With additional customization options it allows you to build quickly admin panels or simple controllers to output data.
@@ -28,6 +30,11 @@ It works with existing models so all your validations, associations, etc will wo
 - change labels
 - specify which fields where to show
 - provide additional options for form fields
+
+How CRUD looks - simple but created in 2 minutes:
+
+![rails scaffold generator](docs/index.png)
+![rails scaffold generator](docs/edit.png)
 
 If you need examples of customization (see `test/dummy` as an example):
 
@@ -137,6 +144,7 @@ Rails.application.routes.draw do
 - work with I18n to translate labels?
 - how to customize views
 - view customization per controller
+- refactor how controller is generated on the fly (combine into one file)
 
 ## Contributing
 
