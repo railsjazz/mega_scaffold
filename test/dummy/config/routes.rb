@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mega_scaffold :export_lists
+
   resources :companies do
     mega_scaffold :attachments,
       parent: -> (controller) { Company.find(controller.params[:company_id]) },

@@ -69,4 +69,10 @@ describe "Pages", type: :request do
     expect(Account.find_by(id: @account.id)).to be_nil
   end
 
+  it 'saves with underscore record' do
+    post "/export_lists", params: { export_list: { name: "name", account_id: 42 } }
+    expect(response).to be_redirect
+    expect(ExportList.first.account_id).to eq(42)
+  end  
+
 end

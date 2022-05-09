@@ -1,0 +1,2 @@
+class ExportList < ApplicationRecord
+end

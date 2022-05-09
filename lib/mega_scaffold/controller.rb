@@ -81,7 +81,7 @@ module MegaScaffold
     end
 
     def record_params
-      params.require(mega_scaffold.model.to_s.downcase).permit(mega_scaffold_permits)
+      params.require(mega_scaffold.model.to_s.underscore).permit(mega_scaffold_permits)
     end
 
   end
