@@ -1,5 +1,7 @@
 # mega_scaffold
 
+[![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
+
 This is the FASTEST way how to add CRUD functionality for your models. Literally by just adding ONE LINE of code in `routes.rb`.
 
 With additional customization options it allows you to build quickly admin panels or simple controllers to output data.
