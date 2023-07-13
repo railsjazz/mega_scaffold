@@ -149,6 +149,9 @@ Rails.application.routes.draw do
 
 ## Contributing
 
+[<img src="https://opensource-heroes.com/svg/embed/railsjazz/mega_scaffold"
+/>](https://opensource-heroes.com/r/railsjazz/mega_scaffold)
+
 You are welcome to contribute.
 
 ## License
