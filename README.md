@@ -1,7 +1,8 @@
 # mega_scaffold
 
 [![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
-[![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/r/railsjazz/mega_scaffold)
+
+[!["Buy Me A Coffee"](https://github.com/igorkasyanchuk/get-smart/blob/main/docs/snapshot-bmc-button-small.png?raw=true)](https://buymeacoffee.com/igorkasyanchuk)
 
 This is the FASTEST way how to add CRUD functionality for your models. Literally by just adding ONE LINE of code in `routes.rb`.
 
@@ -149,9 +150,6 @@ Rails.application.routes.draw do
 
 ## Contributing
 
-[<img src="https://opensource-heroes.com/svg/embed/railsjazz/mega_scaffold"
-/>](https://opensource-heroes.com/r/railsjazz/mega_scaffold)
-
 You are welcome to contribute.
 
 ## License
@@ -160,3 +158,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 [<img src="https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/more_gems.png?raw=true"
 />](https://www.railsjazz.com/?utm_source=github&utm_medium=bottom&utm_campaign=mega_scaffold)
+
+[!["Buy Me A Coffee"](https://github.com/igorkasyanchuk/get-smart/blob/main/docs/snapshot-bmc-button.png?raw=true)](https://buymeacoffee.com/igorkasyanchuk)
